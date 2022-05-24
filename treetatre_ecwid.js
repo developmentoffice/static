@@ -12,7 +12,7 @@ const Controller = {
             VK.Retargeting.Hit();
         };
         document.head.appendChild(script);
-        console.log('Init VK counter');
+        // console.log('Init VK counter');
     }
 };
 
