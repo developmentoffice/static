@@ -53,7 +53,6 @@ const Controller = {
         }
     }
 };
-
 window.addEventListener('load', () => {
     try {
         Ecwid.OnPageLoaded.add(page => {
