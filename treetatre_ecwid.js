@@ -1,6 +1,7 @@
 const Controller = {
-    addToCart: null,
-    async init() {
+    type: '',
+    async init(type) {
+        this.type = type;
         await this.initCounter();
         this.initEvents();
     },
@@ -20,8 +21,16 @@ const Controller = {
         })
     },
     initEvents() {
-        const addToCart = document.querySelector('.product-details .form-control__button');
-        if (addToCart) this.sendEvent('add to cart', addToCart, 'click');
+        switch (this.type) {
+            case 'PRODUCT':
+                const addToCart = document.querySelector('.product-details .form-control__button');
+                console.log(addToCart);
+                if (addToCart) this.sendEvent('add to cart', addToCart, 'click');
+            break;
+            case 'CART':
+            break;
+        }
+
         const checkout = document.querySelector('.ec-cart__body .form-control__button');
         if (checkout) this.sendEvent('initiate checkout', checkout, 'click');
         const purchase = document.querySelector('.ec-confirmation');
@@ -30,7 +39,9 @@ const Controller = {
     sendEvent(eventName, element = null, action = null) {
         try {
             if (element && action) {
+                console.log(element, action);
                 element.addEventListener(action, event => {
+                    console.log('clicked');
                     VK.Retargeting.Event(eventName);
                     console.log(`Send event: ${element}, ${action}, ${eventName}`);
                 });
@@ -48,7 +59,7 @@ window.addEventListener('load', () => {
     try {
         Ecwid.OnPageLoaded.add(page => {
             console.log(page);
-            Controller.init();
+            Controller.init(page.type);
         });
     } catch (e) {}
 });
