@@ -27,11 +27,11 @@ const Controller = {
                 if (addToCart) this.sendEvent('add_to_cart', addToCart, 'click');
             break;
             case 'CART':
+                const checkout = document.querySelector('.ec-cart__button--checkout');
+                if (checkout) this.sendEvent('initiate_checkout', checkout, 'click');
             break;
         }
 
-        const checkout = document.querySelector('.ec-cart__body .form-control__button');
-        if (checkout) this.sendEvent('initiate_checkout', checkout, 'click');
         const purchase = document.querySelector('.ec-confirmation');
         if (purchase) this.sendEvent('purchase');
     },
@@ -40,14 +40,14 @@ const Controller = {
             if (element && action) {
                 element.addEventListener(action, event => {
                     VK.Retargeting.Event(eventName);
-                    console.log(`Send event: ${action}, ${eventName}`);
+                    console.log(`Send event: ${eventName}`);
                 });
             } else {
                 VK.Retargeting.Event(eventName);
                 console.log(`Send event: ${eventName}`);
             }
         } catch(e) {
-            console.log(`Send event error: ${action}, ${eventName}`);
+            console.log(`Send event error: ${eventName}`);
         }
     }
 };
