@@ -30,24 +30,26 @@ const Controller = {
                 const checkout = document.querySelector('.ec-cart__button--checkout');
                 if (checkout) this.sendEvent('initiate_checkout', checkout, 'click');
             break;
+            case 'ORDER_CONFIRMATION':
+                const purchase = document.querySelector('.ec-confirmation');
+                if (purchase) this.sendEvent('purchase');
+            break;
         }
 
-        const purchase = document.querySelector('.ec-confirmation');
-        if (purchase) this.sendEvent('purchase');
     },
     sendEvent(eventName, element = null, action = null) {
         try {
             if (element && action) {
                 element.addEventListener(action, event => {
                     VK.Retargeting.Event(eventName);
-                    console.log(`Send event: ${eventName}`);
+                    console.log(`VK Send event: ${eventName}`);
                 });
             } else {
                 VK.Retargeting.Event(eventName);
-                console.log(`Send event: ${eventName}`);
+                console.log(`VK Send event: ${eventName}`);
             }
         } catch(e) {
-            console.log(`Send event error: ${eventName}`);
+            console.log(`VK Send event error: ${eventName}`);
         }
     }
 };
@@ -55,7 +57,6 @@ const Controller = {
 window.addEventListener('load', () => {
     try {
         Ecwid.OnPageLoaded.add(page => {
-            console.log(page);
             Controller.init(page.type);
         });
     } catch (e) {}
