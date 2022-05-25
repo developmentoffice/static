@@ -23,34 +23,31 @@ const Controller = {
     initEvents() {
         switch (this.type) {
             case 'PRODUCT':
-                const addToCart = document.querySelector('.product-details .form-control__button');
-                console.log(addToCart);
-                if (addToCart) this.sendEvent('add to cart', addToCart, 'click');
+                const addToCart = document.querySelector('.details-product-purchase__add-buttons');
+                if (addToCart) this.sendEvent('add_to_cart', addToCart, 'click');
             break;
             case 'CART':
             break;
         }
 
         const checkout = document.querySelector('.ec-cart__body .form-control__button');
-        if (checkout) this.sendEvent('initiate checkout', checkout, 'click');
+        if (checkout) this.sendEvent('initiate_checkout', checkout, 'click');
         const purchase = document.querySelector('.ec-confirmation');
         if (purchase) this.sendEvent('purchase');
     },
     sendEvent(eventName, element = null, action = null) {
         try {
             if (element && action) {
-                console.log(element, action);
                 element.addEventListener(action, event => {
-                    console.log('clicked');
                     VK.Retargeting.Event(eventName);
-                    console.log(`Send event: ${element}, ${action}, ${eventName}`);
+                    console.log(`Send event: ${action}, ${eventName}`);
                 });
             } else {
                 VK.Retargeting.Event(eventName);
                 console.log(`Send event: ${eventName}`);
             }
         } catch(e) {
-            console.log(`Send event error: ${element}, ${action}, ${eventName}`);
+            console.log(`Send event error: ${action}, ${eventName}`);
         }
     }
 };
